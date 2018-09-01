@@ -163,8 +163,7 @@ $( document ).ready(function() {
 			var ele =$(this).parent();
 			var g_id = $(this).parent().siblings(':first').html();
             var g_name = $(this).parent().siblings(':nth-of-type(1)').html();
-console.log(g_id);
-                    console.log(g_name);
+
 
 		//console.log(grid.data());//
 		$('#edit_model').modal('show');
