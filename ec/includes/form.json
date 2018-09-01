@@ -1,0 +1,11 @@
+[
+      {
+      "dataType": "textarea",
+  		"class": "form-control",
+  		"fields" :
+  			{
+  				"備注": "pullFrom-options-name-<comment>-placeholder-~~"
+  			}
+      }
+
+]
