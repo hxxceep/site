@@ -10,8 +10,16 @@
 <script src="dist/bootstrap.min.js"></script>
 <script src="dist/jquery.bootgrid.min.js"></script>
 <script src="dist/jQuery.resizableColumns.min.js"></script>
+<style>
+.bootgrid-table2{
+display: block;
+width: 1200px;
+overflow-x: scroll;
+}
+</style>
 </head>
 <body>
+
 	<div class="container">
       <div class="">
         <h1>薪金介面</h1>
@@ -19,119 +27,37 @@
 		<div class="well clearfix">
 			   <?php include 'menu.php'; ?>
 			<div class="pull-right"></div></div>
-		<table id="salary_grid" class="table table-condensed table-hover table-striped" width="60%" cellspacing="0" data-toggle="bootgrid">
+
+			<div id="periodHTML" class="actions btn-group">
+				<select id="period" class="form-control"></select>
+		  </div>
+
+<div class="table-responsive">
+		<table id="salary_grid" class="table table-condensed table-hover table-striped" width="100%" cellspacing="0" data-toggle="bootgrid">
 			<thead>
 				<tr>
-				  <th data-column-id="id" data-type="numeric" >員工編號</th>
-					<th data-column-id="salary_staff" data-identifier="true">姓名</th>
-					<th data-column-id="salary_monthly">全月總金額</th>
-					<th data-column-id="salary_paid">已付金額</th>
+				  <th data-column-id="id" data-type="numeric"  data-identifier="true" >員工編號</th>
+					<th data-column-id="salary_staff">姓名</th>
+					<th data-column-id="salary_staffcomment">員工備註</th>
+					<th data-column-id="salary_monthly" >總金</th>
+					<th data-column-id="salary_check" data-type="numeric" data-formatter="textbox">支票</th>
+					<th data-column-id="salary_cashcheck" data-type="numeric" data-formatter="textbox">現票</th>
+					<th data-column-id="salary_paid" data-type="numeric" data-formatter="textbox">現金</th>
+					<th data-column-id="salary_transfer" data-type="numeric" data-formatter="textbox">轉帳</th>
+					<th data-column-id="salary_jclub" data-type="numeric" data-formatter="textbox">馬會</th>
+					<th data-column-id="salary_add" data-type="numeric" data-formatter="textbox">補錢</th>
+					<th data-column-id="salary_minus" data-type="numeric" data-formatter="textbox">扣錢</th>
+					<th data-column-id="salary_comment" data-formatter="comment">備註</th>
           <th data-column-id="salary_remian">餘數</th>
-          <th data-column-id="salary_tax">報稅金額</th>
 					<th data-column-id="salary_month">年/月份</th>
-					<th data-column-id="commands" data-formatter="commands" data-sortable="false">命令</th>
 				</tr>
 			</thead>
 		</table>
+	</div>
     </div>
       </div>
     </div>
 
-<div id="add_model" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Add salary</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="frm_add">
-				<input type="hidden" value="add" name="action" id="action">
-                  <div class="form-group">
-                    <label for="name" class="control-label">姓名:</label>
-                    <input type="text" class="form-control " id="name" name="name"  READONLY />
-                  </div>
-                  <div class="form-group">
-                    <label for="salary" class="control-label">全月總金額:</label>
-                    <input type="text" class="form-control" id="salary_monthly" name="salary_monthly" READONLY	/>
-                  </div>
-									<div class="form-group">
-										<label for="salary" class="control-label">已付金額:</label>
-										<input type="text" class="form-control" id="salary_paid" name="salary_paid"/>
-									</div>
-									<div class="form-group">
-										<label for="salary" class="control-label">餘數:</label>
-										<input type="text" class="form-control" id="salary_remian" name="salary_remian" READONLY/>
-									</div>
-									<div class="form-group">
-										<label for="salary" class="control-label">報稅金額:</label>
-												<input type="text" class="form-control" id="salary_tax" name="salary_tax"/>
-									</div>
-									<div class="form-group">
-										<label for="salary" class="control-label">月份:</label>
-												<input type="text" class="form-control" id="salary_month" name="salary_month"/>
-									</div>
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="btn_add" class="btn btn-primary">Save</button>
-            </div>
-			</form>
-        </div>
-    </div>
-</div>
-<div id="edit_model" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">修改薪金</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="frm_edit">
-				<input type="hidden" value="edit" name="action" id="action">
-				<input type="hidden" value="0" name="edit_id" id="edit_id">
-
-								<div class="form-group">
-									<label for="name" class="control-label">員工編號:</label>
-									<input type="text" class="form-control " id="edit_staffid" name="edit_staffid"  READONLY />
-								</div>
-										<div class="form-group">
-											<label for="name" class="control-label">姓名:</label>
-											<input type="text" class="form-control " id="edit_staffname" name="edit_staffname"  READONLY />
-										</div>
-										<div class="form-group">
-											<label for="salary" class="control-label">全月總金額:</label>
-											<input type="text" class="form-control" id="edit_salary_monthly" name="edit_salary_monthly" READONLY	/>
-										</div>
-										<div class="form-group">
-											<label for="salary" class="control-label">已付金額:</label>
-											<input type="text" class="form-control" id="edit_salary_paid" name="edit_salary_paid" autocomplete="off"/>
-										</div>
-										<div class="form-group">
-											<label for="salary" class="control-label">餘數:</label>
-											<input type="text" class="form-control" id="edit_salary_remian" name="edit_salary_remian" READONLY/>
-										</div>
-										<div class="form-group">
-											<label for="salary" class="control-label">報稅金額:</label>
-													<input type="text" class="form-control" id="edit_salary_tax" name="edit_salary_tax" autocomplete="off"/>
-										</div>
-										<div class="form-group">
-											<label for="salary" class="control-label">月份:</label>
-													<input type="text" class="form-control" id="edit_month" name="edit_month" READONLY/>
-										</div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">關閂</button>
-                <button type="button" id="btn_edit" class="btn btn-primary">儲存</button>
-            </div>
-			</form>
-        </div>
-    </div>
-</div>
 </body>
 </html>
 <script type="text/javascript">
@@ -139,9 +65,9 @@ $( document ).ready(function() {
 	var grid = $("#salary_grid").bootgrid({
 		ajax: true,
 		rowSelect: true,
+		rowCount:-1,
 		post: function ()
 		{
-			/* To accumulate custom parameter with the request object */
 			return {
 				id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
 			};
@@ -149,53 +75,18 @@ $( document ).ready(function() {
 
 		url: "response_salary.php",
 		formatters: {
-		        "commands": function(column, row)
-		        {
-		            return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-edit\"></span></button> "
-		        }
-		    }
+        "textbox": function(column, row)
+        {
+            return "<input name='"+ row.id +"," + column.id +"' onblur='updateSalary(this)' type='text' size='3' onkeypress='return isNumberKey(event)' maxlength='5' value="+row[column.id]+"></input>"
+        },
+				"comment": function(column, row)
+        {
+            return "<input name='"+ row.id +"," + column.id +"' onblur='updateComment(this)' type='text' size='10' maxlength='250' value="+row[column.id]+"></input>"
+        }
+    }
    }).on("loaded.rs.jquery.bootgrid", function()
 {
-    /* Executes after data is loaded and rendered */
-    grid.find(".command-edit").on("click", function(e)
-    {
-        //alert("You pressed edit on row: " + $(this).data("row-id"));
-			var ele =$(this).parent();
-			var g_id = $(this).parent().siblings(':first').html();
-            var g_name = $(this).parent().siblings(':nth-of-type(1)').html();
 
-
-		//console.log(grid.data());//
-		$('#edit_model').modal('show');
-					if($(this).data("row-id") >0) {
-
-                                // collect the data
-                                $('#edit_id').val(ele.siblings(':first').html()); // in case we're changing the key
-																$('#edit_staffid').val(ele.siblings(':first').html());
-                                $('#edit_staffname').val(ele.siblings(':nth-of-type(2)').html());
-                                $('#edit_salary_monthly').val(ele.siblings(':nth-of-type(3)').html());
-																$('#edit_salary_paid').val(ele.siblings(':nth-of-type(4)').html());
-                                $('#edit_salary_remian').val(ele.siblings(':nth-of-type(5)').html());
-																$('#edit_salary_tax').val(ele.siblings(':nth-of-type(6)').html());
-																$('#edit_month').val(ele.siblings(':nth-of-type(7)').html());
-					} else {
-					 alert('Now row selected! First select row, then click edit button');
-					}
-    }).end().find(".command-delete").on("click", function(e)
-    {
-
-		var conf = confirm('Delete ' + $(this).data("row-id") + ' items?');
-					alert(conf);
-                    if(conf){
-                                $.post('response_salary.php', { id: $(this).data("row-id"), action:'delete'}
-                                    , function(){
-                                        // when ajax returns (callback),
-										$("#salary_grid").bootgrid('reload');
-                                });
-								//$(this).parent('tr').remove();
-								//$("#salary_grid").bootgrid('remove', $(this).data("row-id"))
-                    }
-    });
 });
 
 function ajaxAction(action) {
@@ -207,24 +98,76 @@ function ajaxAction(action) {
 				  dataType: "json",
 				  success: function(response)
 				  {
-					$('#'+action+'_model').modal('hide');
 					$("#salary_grid").bootgrid('reload');
 				  }
 				});
 			}
 
-			$( "#command-add" ).click(function() {
-			  $('#add_model').modal('show');
-			});
-			$( "#btn_add" ).click(function() {
-			  ajaxAction('add');
-			});
-			$( "#btn_edit" ).click(function() {
-			  ajaxAction('edit');
-			});
+
 });
 
 $(function(){
   $('table').resizableColumns();
 })
+
+function updateSalary(o)
+{
+console.log(o.name)
+console.log(o.value)
+}
+
+function updateComment(o)
+{
+console.log(o.name)
+console.log(o.value)
+}
+
+
+function monthDiff(d1, d2) {
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth() + 1;
+    months += d2.getMonth();
+    return months <= 0 ? 0 : months;
+}
+
+function genPeriod(){
+var d =new Date("2018-5-01")
+var cd = new Date();
+var a = [];
+var c = monthDiff(d,cd);
+
+for (i=0 ;i<c;i++){
+d.setMonth(d.getMonth()+1)
+a.push(d.getFullYear() +"-"+ ("0" + (d.getMonth() + 1)).slice(-2));
+}
+	$.each(a, function(key, value) {
+	    $('#period').append($("<option/>", {
+	        value: value,
+	        text: value
+	    }));
+	});
+
+}
+
+function isNumberKey(evt)
+			{
+				var charCode = (evt.which) ? evt.which : evt.keyCode;
+				if (charCode != 46 && charCode > 31
+				&& (charCode < 48 || charCode > 57))
+				return false;
+				return true;
+			}
+<?php
+echo "var dataperiod='". $_REQUEST["d"]."';\r\n";
+?>
+$( document ).ready(function() {
+	genPeriod();
+	jQuery("#periodHTML").detach().appendTo('.actionBar');
+	$("#periodHTML").change(function () {
+			var url = window.location.href.split('?')[0];
+			window.location.href = url + "?d=" + $("#periodHTML option:selected").text();
+	});
+});
+
 </script>

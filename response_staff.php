@@ -48,7 +48,7 @@
 		$data = array();;
 		$sql = "INSERT INTO `staff`( `staff_name`,`staff_name_chi`, `staff_phone`, `staff_hkid`, `staff_district`, `staff_paymethod`,`staff_remark`) VALUES ";
 		$sql .= "('" ;
-		$sql .=		mysqli_real_escape_string($this->conn,$params["staff_name"]) . "', '" ;
+		$sql .=		mysqli_real_escape_string($this->conn,str_replace(",",'',$params["staff_name"])) . "', '" ;
 		$sql .=		mysqli_real_escape_string($this->conn,$params["staff_name_chi"]) . "', '" ;
 		$sql .=  	mysqli_real_escape_string($this->conn,$params["staff_phone"]) . "','" ;
 		$sql .=  	mysqli_real_escape_string($this->conn,$params["staff_hkid"])  . "','" ;
@@ -115,7 +115,7 @@
 		$data = array();
 		//print_R($_POST);die;
 		$sql = "Update staff set ";
-		$sql .="staff_name = '". 		mysqli_real_escape_string($this->conn,$params["edit_staff_name"]) . "',";
+		$sql .="staff_name = '". 		mysqli_real_escape_string($this->conn,str_replace(",",'',$params["edit_staff_name"])) . "',";
 		$sql .="staff_name_chi = '". 		mysqli_real_escape_string($this->conn,$params["edit_staff_name_chi"]) . "',";
 		$sql .="staff_phone= '" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_phone"]) ."',";
 		$sql .="staff_hkid=  '" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_hkid"]) ."',";

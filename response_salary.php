@@ -44,25 +44,11 @@
 
 		echo json_encode($this->data);
 	}
-		function insertEmployee($params) {
-		$data = array();;
-		$sql = "INSERT INTO `company` (`company_name`, `company_place`, `company_time`, `company_price`, `company_contact`, `company_comment`) VALUES";
-		$sql .= "('" ;
-		$sql .=		mysqli_real_escape_string($this->conn,$params["company_name"]) . "', '" ;
-		$sql .=  	mysqli_real_escape_string($this->conn,$params["company_place"]) . "','" ;
-		$sql .=  	mysqli_real_escape_string($this->conn,$params["company_time"])  . "','" ;
-		$sql .=  	mysqli_real_escape_string($this->conn,$params["company_price"])  . "','" ;
-		$sql .=  	mysqli_real_escape_string($this->conn,$params["company_contact"])  . "','" ;
-		$sql .=  	mysqli_real_escape_string($this->conn,$params["company_comment"]) ;
-		$sql .= 	"');  ";
-//print($sql);die;
-		echo $result = mysqli_query($this->conn, $sql) or die("error to insert employee data");
 
-	}
 
 
 	function getRecords($params) {
-		$rp = isset($params['rowCount']) ? $params['rowCount'] : 10;
+		$rp = isset($params['rowCount']) ? 1000 : 10;
 
 		if (isset($params['current'])) { $page  = $params['current']; } else { $page=1; };
         $start_from = ($page-1) * $rp;
@@ -71,8 +57,8 @@
 
 		if( !empty($params['searchPhrase']) ) {
 			$where .=" WHERE ";
-			$where .=" DATE_FORMAT(`salary_month`,'%Y-%m') like '".$params['searchPhrase']."' ";
-			$where .=" OR staff LIKE '".$params['searchPhrase']."%' 	";
+		//	$where .=" DATE_FORMAT(`salary_month`,'%Y-%m') like '".$params['searchPhrase']."' ";
+			$where .=" salary_staff LIKE '".$params['searchPhrase']."%' 	";
 	   }
 
 
@@ -84,8 +70,15 @@
 
 
 			   // getting total number records without any search
-		$sql = "SELECT `staff` as id , (select concat(staff_name_chi , ' ', staff_name) from staff where staff_id= staff)  as salary_staff , sum(`salary_paid`) as salary_paid, sum(`salary_OS`) as salary_monthly,sum(`salary_paid` - `salary_OS`) as salary_remian, sum(`salary_tax`) as salary_tax, DATE_FORMAT(`salary_month`,'%Y-%m') as salary_month FROM";
-		$sql .="(SELECT * FROM `salary`  ";
+		$sql = "SELECT staff as id , (select staff_name_chi from staff where staff_id= staff)  as salary_staff , ";
+		$sql .= "(select staff_remark from staff where staff_id= staff)  as salary_staffcomment , ";
+		$sql .="sum('salary_paid') as salary_paid, sum(`salary_OS`) as salary_monthly,sum(`salary_paid` - `salary_OS`) as salary_remian, ";
+		$sql .="sum(`salary_tax`) as salary_tax, DATE_FORMAT(`salary_month`,'%Y-%m') as salary_month,";
+		$sql .="sum(`salary_check`) as salary_check , sum(`salary_cashcheck`) as salary_cashcheck,  ";
+		$sql .="sum(`salary_cash`) as salary_cash, sum(`salary_transfer`) as salary_transfer, ";
+		$sql .= "sum(`salary_jclub`) as salary_jclub , sum(`salary_add`) as salary_add, sum(`salary_minus`) as salary_minus ,";
+		$sql .=" max(`salary_comment`) as salary_comment";
+		$sql .=" FROM (SELECT * FROM `salary`  ";
     $sql .=" union all ";
 		$sql .="SELECT * FROM `salary_paid`) m ";
 		$sqlTot .= $sql;
@@ -101,9 +94,6 @@
 		if ($rp!=-1)
 
 		$sqlRec .= " group by `staff` , DATE_FORMAT(`salary_month`,'%Y-%m')";
-		$sqlRec .= " LIMIT ". $start_from .",".$rp;
-
-
 
 		//print $sqlRec	 ; die();
 		$qtot = mysqli_query($this->conn, $sqlTot) or die("error to fetch tot employees data"  .$sqlTot);
@@ -123,7 +113,7 @@
 		return $json_data;
 	}
 	function updateEmployee($params) {
-		$data = array();
+
 		//print_R($_POST);die;
 		$sql = "insert into salary_paid (staff, salary_paid, salary_tax, salary_month) values(";
 		$sql .="'" .mysqli_real_escape_string($this->conn,$_POST["edit_staffid"]). "',";
