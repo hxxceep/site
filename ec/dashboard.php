@@ -60,7 +60,7 @@
 								 </div>
 
                 <p>
-                	<label>散工名單:(員工編號: 中名 英名 , 薪金) </label>
+                	<label>散工名單:(員工編號: 中名, 薪金) </label>
                 	<textarea class="form-control" name="description" id="stafflist" rows="10"></textarea>
                 </p>
 
