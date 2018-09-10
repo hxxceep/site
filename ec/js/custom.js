@@ -58,7 +58,7 @@ $('#calendarModal').on('show.bs.modal', function() {
 				{
 
 					var total = parseInt($("#staff_salary").val()*1)+ parseInt($("#staff_salary_OT").val()*1)
-					$("#stafflist").val($("#stafflist").val().replace("," , "")  + $("#astaff").val() + "," + total +  '\r\n')
+					$("#stafflist").val($("#stafflist").val()  + $("#astaff").val().replace("," , "") + "," + total +  '\r\n')
 				}else{
 
 					alert("格式錯誤");
