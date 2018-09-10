@@ -1,5 +1,13 @@
 [
       {
+      "dataType": "input",
+      "class": "form-control",
+      "fields" :
+        {
+          "單人數": "pullFrom-options-name-<manpower>-placeholder-~~"
+        }
+      },
+      {
       "dataType": "textarea",
   		"class": "form-control",
   		"fields" :
