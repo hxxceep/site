@@ -74,6 +74,7 @@
 									<div class="form-group">
 							  		<label for="sel1">居住地區:</label>
 									  <select class="form-control"  id="staff_district" name="staff_district">
+											<option></option>
 											<option>中西區</option>
 											<option>東區</option>
 											<option>南區</option>
@@ -92,6 +93,7 @@
 											<option>荃灣</option>
 											<option>屯門</option>
 											<option>元朗</option>
+											<option>天水圍</option>
 									  </select>
 									</div>
 									<div class="form-group">
