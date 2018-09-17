@@ -117,19 +117,30 @@
 				 } else {
 					$allDayStatus = false;
 				 }
+				$eventlist	="\r\n";
+ 			 	$event_replace =  preg_replace('/[0-9]+|:|,/', '', $this->row['description']);
+				$event_number = preg_split('/\r\n|\r|\n/', $event_replace);
+				$i=1;
+				foreach ($event_number as $name) {
+					if(!empty($name)){
+				    $eventlist	.= $i .".". $name."\r\n";
+						$i++;
+						}
+				}
 
 				 // Set Variables Data from DB
+				 $event_manpower= "單人數:".--$i."/". $this->row['manpower'];
 				 $event_id = $this->row['repeat_id'];
 				 $event_original_id = $this->row['id'];
 				 $event_title = strip_tags($this->row['title']);
-				 $event_description = $this->row['description'];
+				 $event_description =$eventlist ;
 				 $event_start = $this->row['start'];
 				 $event_end = $this->row['end'];
 				 $event_allDay = $allDayStatus;
 				 $event_color = $this->row['color'];
 				 $event_url = $this->row['url'];
 
-				 $build_json = array('id' => $event_id,'desc'=> $event_description,'original_id' => $event_original_id, 'title' => $event_title, 'start' => $event_start, 'end' => $event_end, 'allDay' => $event_allDay, 'color' => $event_color);
+				 $build_json = array('id' => $event_id,'desc'=> $event_description,'original_id' => $event_original_id, 'title' => $event_title, 'start' => $event_start, 'end' => $event_end, 'allDay' => $event_allDay, 'color' => $event_color, 'manpower' =>$event_manpower);
 
 				 array_push($this->json_array, $build_json);
 

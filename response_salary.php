@@ -49,7 +49,7 @@
 
 	function getRecords($params) {
 		$rp = isset($params['rowCount']) ? 1000 : 10;
-
+		$datewhere ="";
 		if (isset($params['current'])) { $page  = $params['current']; } else { $page=1; };
         $start_from = ($page-1) * $rp;
 
@@ -68,11 +68,20 @@
 		}
 		*/
 
+		if (empty($_GET["d"]) || trim($_GET["d"]) =="" ){
+
+				$datewhere= date("Y-m");
+		}else{
+
+				$datewhere =$_GET["d"];
+		}
+
+
 
 			   // getting total number records without any search
 		$sql = "SELECT staff as id , (select staff_name_chi from staff where staff_id= staff)  as salary_staff , ";
 		$sql .= "(select staff_remark from staff where staff_id= staff)  as salary_staffcomment , ";
-		$sql .="sum('salary_paid') as salary_paid, sum(`salary_OS`) as salary_monthly,sum(`salary_paid` - `salary_OS`) as salary_remian, ";
+		$sql .="sum('salary_paid') as salary_paid, sum(`salary_OS`+ `salary_add`  - `salary_minus`) as salary_monthly,sum(`salary_OS` -`salary_transfer` - `salary_cashcheck`- 'salary_paid' + `salary_add` - `salary_check` - `salary_cash`-`salary_jclub`  - `salary_minus`) as salary_remian, ";
 		$sql .="sum(`salary_tax`) as salary_tax, DATE_FORMAT(`salary_month`,'%Y-%m') as salary_month,";
 		$sql .="sum(`salary_check`) as salary_check , sum(`salary_cashcheck`) as salary_cashcheck,  ";
 		$sql .="sum(`salary_cash`) as salary_cash, sum(`salary_transfer`) as salary_transfer, ";
@@ -93,7 +102,7 @@
 		}
 		if ($rp!=-1)
 
-		$sqlRec .= " group by `staff` , DATE_FORMAT(`salary_month`,'%Y-%m')";
+		$sqlRec .= " where  DATE_FORMAT(`salary_month`,'%Y-%m')  = '".$datewhere."'	 group by `staff` , DATE_FORMAT(`salary_month`,'%Y-%m')";
 
 		//print $sqlRec	 ; die();
 		$qtot = mysqli_query($this->conn, $sqlTot) or die("error to fetch tot employees data"  .$sqlTot);
@@ -114,14 +123,14 @@
 	}
 	function updateEmployee($params) {
 
+		$staffkey = explode(",",$_POST["id"]);
 		//print_R($_POST);die;
-		$sql = "insert into salary_paid (staff, salary_paid, salary_tax, salary_month) values(";
-		$sql .="'" .mysqli_real_escape_string($this->conn,$_POST["edit_staffid"]). "',";
-		$sql .= mysqli_real_escape_string($this->conn,$params["edit_salary_paid"]) .", ";
-  	$sql .= mysqli_real_escape_string($this->conn,$params["edit_salary_tax"]) .", ";
-		$sql .= "'" .mysqli_real_escape_string($this->conn,$params["edit_month"]) ."-01')" ;
-		$sql .="ON DUPLICATE KEY UPDATE salary_paid= ".mysqli_real_escape_string($this->conn,$params["edit_salary_paid"])." , salary_tax =" .mysqli_real_escape_string($this->conn,$params["edit_salary_tax"]);
-  	//print $sql;	die();
+		$sql = "insert into salary_paid (staff, ". $staffkey[1] .", salary_month) values(";
+		$sql .="'" .mysqli_real_escape_string($this->conn,$staffkey[0]). "',";
+		$sql .= "'" .mysqli_real_escape_string($this->conn,$_POST["value"]) ."', ";
+		$sql .= "'" .mysqli_real_escape_string($this->conn,$_GET["d"]) ."-01')" ;
+		$sql .="ON DUPLICATE KEY UPDATE ". $staffkey[1] ."= '".mysqli_real_escape_string($this->conn,$_POST["value"])."'";
+
 		echo $result = mysqli_query($this->conn, $sql) or die("error to update employee data");
 	}
 

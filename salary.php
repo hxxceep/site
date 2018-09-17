@@ -73,15 +73,15 @@ $( document ).ready(function() {
 			};
 		},
 
-		url: "response_salary.php",
+		url: "response_salary.php?d=" + dataperiod,
 		formatters: {
         "textbox": function(column, row)
         {
-            return "<input name='"+ row.id +"," + column.id +"' onblur='updateSalary(this)' type='text' size='3' onkeypress='return isNumberKey(event)' maxlength='5' value="+row[column.id]+"></input>"
+            return "<input id='"+ row.id  + column.id +"' name='"+ row.id +"," + column.id +"' onblur='updateSalary(this)' type='text' size='3' onkeypress='return isNumberKey(event)' maxlength='5' value="+row[column.id]+"></input>"
         },
 				"comment": function(column, row)
         {
-            return "<input name='"+ row.id +"," + column.id +"' onblur='updateComment(this)' type='text' size='10' maxlength='250' value="+row[column.id]+"></input>"
+            return "<input id='"+ row.id + column.id +"' name='"+ row.id +"," + column.id +"' onblur='updateSalary(this)' type='text' size='10' maxlength='250' value="+row[column.id]+"></input>"
         }
     }
    }).on("loaded.rs.jquery.bootgrid", function()
@@ -90,6 +90,7 @@ $( document ).ready(function() {
 });
 
 function ajaxAction(action) {
+
 				data = $("#frm_"+action).serializeArray();
 				$.ajax({
 				  type: "POST",
@@ -112,15 +113,23 @@ $(function(){
 
 function updateSalary(o)
 {
-console.log(o.name)
-console.log(o.value)
+
+			$("#"+o.id).css("border","1px solid red");
+		$.ajax({
+			type: "POST",
+			url: "response_salary.php?action=edit&d="+dataperiod,
+			data: { id: o.name, value: o.value },
+			dataType: "json",
+			success: function(response)
+			{
+				$("#"+o.id).css("border","0.5px solid grey");
+				console.log(response);
+			}
+		});
+
 }
 
-function updateComment(o)
-{
-console.log(o.name)
-console.log(o.value)
-}
+
 
 
 function monthDiff(d1, d2) {
@@ -135,7 +144,7 @@ function genPeriod(){
 var d =new Date("2018-5-01")
 var cd = new Date();
 var a = [];
-var c = monthDiff(d,cd);
+var c = monthDiff(d,cd)+1;
 
 for (i=0 ;i<c;i++){
 d.setMonth(d.getMonth()+1)
@@ -147,7 +156,7 @@ a.push(d.getFullYear() +"-"+ ("0" + (d.getMonth() + 1)).slice(-2));
 	        text: value
 	    }));
 	});
-
+$('#period').val(dataperiod)
 }
 
 function isNumberKey(evt)
@@ -159,7 +168,16 @@ function isNumberKey(evt)
 				return true;
 			}
 <?php
-echo "var dataperiod='". $_REQUEST["d"]."';\r\n";
+if (empty($_GET["d"]) || trim($_GET["d"]) =="" ){
+
+		$datewhere= date("Y-m");
+}else{
+
+		$datewhere =$_GET["d"];
+}
+
+
+echo "var dataperiod='". $datewhere."';\r\n";
 ?>
 $( document ).ready(function() {
 	genPeriod();
