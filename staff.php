@@ -152,24 +152,26 @@
 											<div class="form-group">
 									  		<label for="staff">居住地區:</label>
 											  <select class="form-control" id="edit_staff_district" name="edit_staff_district"/>
-													<option>中西區</option>
-													<option>東區</option>
-													<option>南區</option>
-													<option>灣仔</option>
-													<option>九龍城</option>
-													<option>觀塘</option>
-													<option>深水埗</option>
-													<option>黃大仙</option>
-													<option>油尖旺</option>
-													<option>離島</option>
-													<option>葵青</option>
-													<option>北區</option>
-													<option>西貢</option>
-													<option>沙田</option>
-													<option>大埔</option>
-													<option>荃灣</option>
-													<option>屯門</option>
-													<option>元朗</option>
+												<option></option>
+												<option>中西區</option>
+												<option>東區</option>
+												<option>南區</option>
+												<option>灣仔</option>
+												<option>九龍城</option>
+												<option>觀塘</option>
+												<option>深水埗</option>
+												<option>黃大仙</option>
+												<option>油尖旺</option>
+												<option>離島</option>
+												<option>葵青</option>
+												<option>北區</option>
+												<option>西貢</option>
+												<option>沙田</option>
+												<option>大埔</option>
+												<option>荃灣</option>
+												<option>屯門</option>
+												<option>元朗</option>
+												<option>天水圍</option>
 											  </select>
 											</div>
 
