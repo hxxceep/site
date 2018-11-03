@@ -4,7 +4,7 @@
       "class": "form-control",
       "fields" :
         {
-          "單人數": "pullFrom-options-name-<manpower>-placeholder-~~"
+          "工作所需人數": "pullFrom-options-name-<manpower>-placeholder-~~"
         }
       },
       {

@@ -61,7 +61,7 @@ $('#calendarModal').on('show.bs.modal', function() {
 					var staffname = $("#astaff").val().replace("," , "").split(";")[0];
 					$("#stafflist").val($("#stafflist").val()  + staffname+ "," + total +  '\r\n')
 					$("#stafflist").val(	$("#stafflist").val().replace(/\n\s*\n/g, '\n'));
-
+					$("#astaff").val("");
 
 				}else{
 
@@ -70,7 +70,7 @@ $('#calendarModal').on('show.bs.modal', function() {
 
 
 			}
-
+/*
 			function getJobPrice(){
 
 				var time = $("#acompany").val();
@@ -91,3 +91,4 @@ $('#calendarModal').on('show.bs.modal', function() {
 
 
 		setTimeout(function(){ getJobPrice(); }, 6000);
+*/

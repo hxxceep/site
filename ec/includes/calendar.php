@@ -129,7 +129,7 @@
 				}
 
 				 // Set Variables Data from DB
-				 $event_manpower= "單人數:".--$i."/". $this->row['manpower'];
+				 $event_manpower= "工作所需人數:".--$i."/". $this->row['manpower'];
 				 $event_id = $this->row['repeat_id'];
 				 $event_original_id = $this->row['id'];
 				 $event_title = strip_tags($this->row['title']);
