@@ -232,7 +232,7 @@ console.log(g_id);
 
 		//console.log(grid.data());//
 		$('#edit_model').modal('show');
-					if($(this).data("row-id") >0) {
+					if($(this).data("row-id") !="") {
 
                       // collect the data
                       $('#edit_staff_id').val(ele.siblings(':first').html()); // in case we're changing the key

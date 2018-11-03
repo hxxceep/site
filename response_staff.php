@@ -49,11 +49,11 @@
 		$sql = "INSERT INTO `staff`( `staff_name`,`staff_name_chi`, `staff_phone`, `staff_hkid`, `staff_district`, `staff_paymethod`,`staff_remark`) VALUES ";
 		$sql .= "('" ;
 		$sql .=		mysqli_real_escape_string($this->conn,str_replace(",",'',$params["staff_name"])) . "', '" ;
-		$sql .=		mysqli_real_escape_string($this->conn,$params["staff_name_chi"]) . "', '" ;
-		$sql .=  	mysqli_real_escape_string($this->conn,$params["staff_phone"]) . "','" ;
-		$sql .=  	mysqli_real_escape_string($this->conn,$params["staff_hkid"])  . "','" ;
-		$sql .=  	mysqli_real_escape_string($this->conn,$params["staff_district"])  . "','" ;
-		$sql .=  	mysqli_real_escape_string($this->conn,$params["staff_paymethod"])  . "','" ;
+		$sql .=		mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_name_chi"])) . "', '" ;
+		$sql .=  	mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_phone"])) . "','" ;
+		$sql .=  	mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_hkid"]))  . "','" ;
+		$sql .=  	mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_district"]))  . "','" ;
+		$sql .=  	mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_paymethod"]))  . "','" ;
 		$sql .=  	mysqli_real_escape_string($this->conn,$params["staff_remark"]) ;
 		$sql .= 	"');  ";
 //print($sql);die;

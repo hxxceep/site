@@ -78,7 +78,7 @@
 
 
 			   // getting total number records without any search
-		$sql = "SELECT staff as id , (select staff_name_chi from staff where staff_id= staff)  as salary_staff , ";
+		$sql = "SELECT concat("WK",staff) as id , (select staff_name_chi from staff where staff_id= staff)  as salary_staff , ";
 		$sql .= "(select staff_remark from staff where staff_id= staff)  as salary_staffcomment , ";
 		$sql .="sum(salary_paid) as salary_paid, sum(`salary_OS`+ `salary_add`  - `salary_minus`) as salary_monthly,sum(`salary_OS` -`salary_transfer` - `salary_cashcheck`- 'salary_paid' + `salary_add` - `salary_check` - `salary_cash`-`salary_jclub`  - `salary_minus`) as salary_remian, ";
 		$sql .="sum(salary_tax) as salary_tax, DATE_FORMAT(`salary_month`,'%Y-%m') as salary_month,";
@@ -120,7 +120,7 @@
 		$staffkey = explode(",",$_POST["id"]);
 		//print_R($_POST);die;
 		$sql = "insert into salary_paid (staff, ". $staffkey[1] .", salary_month) values(";
-		$sql .="'" .mysqli_real_escape_string($this->conn,$staffkey[0]). "',";
+		$sql .="'" .mysqli_real_escape_string($this->conn,str_replace("WK","",$staffkey[0])). "',";
 		$sql .= "'" .mysqli_real_escape_string($this->conn,$_POST["value"]) ."', ";
 		$sql .= "'" .mysqli_real_escape_string($this->conn,$_GET["d"]) ."-01')" ;
 		$sql .="ON DUPLICATE KEY UPDATE ". $staffkey[1] ."= '".mysqli_real_escape_string($this->conn,$_POST["value"])."'";
@@ -131,7 +131,7 @@
 	function deleteEmployee($params) {
 		$data = array();
 		//print_R($_POST);die;
-		$sql = "delete from `company` WHERE cid='".mysqli_real_escape_string($this->conn,$params["id"])."'";
+		$sql = "delete from `company` WHERE cid='".mysqli_real_escape_string($this->conn,str_replace("WK","",$params["id"]))."'";
 
 		echo $result = mysqli_query($this->conn, $sql) or die("error to delete employee data");
 	}
