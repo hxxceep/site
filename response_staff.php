@@ -131,7 +131,7 @@
 	function deletestaff($params) {
 		$data = array();
 		//print_R($_POST);die;
-		$sql = "delete from `staff` WHERE staff_id='".mysqli_real_escape_string($this->conn,,str_replace("WK","" ,$params["id"]))."'";
+		$sql = "delete from `staff` WHERE staff_id='".mysqli_real_escape_string($this->conn,str_replace("WK","" ,$params["id"]))."'";
 
 		echo $result = mysqli_query($this->conn, $sql) or die("error to delete staff data");
 	}
