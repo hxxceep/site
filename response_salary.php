@@ -48,7 +48,7 @@
 
 
 	function getRecords($params) {
-		$rp = isset($params['rowCount']) ? 1000 : 10;
+		$rp = isset($params['rowCount']) ? 1000 : 1000;
 		$datewhere ="";
 		if (isset($params['current'])) { $page  = $params['current']; } else { $page=1; };
         $start_from = ($page-1) * $rp;
@@ -56,9 +56,8 @@
 		$sql = $sqlRec = $sqlTot = $where = '';
 
 		if( !empty($params['searchPhrase']) ) {
-			$where .=" WHERE ";
 		//	$where .=" DATE_FORMAT(`salary_month`,'%Y-%m') like '".$params['searchPhrase']."' ";
-			$where .=" salary_staff LIKE '".$params['searchPhrase']."%' 	";
+			$where .=" salary_staff LIKE '%".$params['searchPhrase']."%' 	";
 	   }
 
 
@@ -81,12 +80,12 @@
 			   // getting total number records without any search
 		$sql = "SELECT staff as id , (select staff_name_chi from staff where staff_id= staff)  as salary_staff , ";
 		$sql .= "(select staff_remark from staff where staff_id= staff)  as salary_staffcomment , ";
-		$sql .="sum('salary_paid') as salary_paid, sum(`salary_OS`+ `salary_add`  - `salary_minus`) as salary_monthly,sum(`salary_OS` -`salary_transfer` - `salary_cashcheck`- 'salary_paid' + `salary_add` - `salary_check` - `salary_cash`-`salary_jclub`  - `salary_minus`) as salary_remian, ";
-		$sql .="sum(`salary_tax`) as salary_tax, DATE_FORMAT(`salary_month`,'%Y-%m') as salary_month,";
-		$sql .="sum(`salary_check`) as salary_check , sum(`salary_cashcheck`) as salary_cashcheck,  ";
-		$sql .="sum(`salary_cash`) as salary_cash, sum(`salary_transfer`) as salary_transfer, ";
-		$sql .= "sum(`salary_jclub`) as salary_jclub , sum(`salary_add`) as salary_add, sum(`salary_minus`) as salary_minus ,";
-		$sql .=" max(`salary_comment`) as salary_comment";
+		$sql .="sum(salary_paid) as salary_paid, sum(`salary_OS`+ `salary_add`  - `salary_minus`) as salary_monthly,sum(`salary_OS` -`salary_transfer` - `salary_cashcheck`- 'salary_paid' + `salary_add` - `salary_check` - `salary_cash`-`salary_jclub`  - `salary_minus`) as salary_remian, ";
+		$sql .="sum(salary_tax) as salary_tax, DATE_FORMAT(`salary_month`,'%Y-%m') as salary_month,";
+		$sql .="sum(salary_check) as salary_check , sum(salary_cashcheck) as salary_cashcheck,  ";
+		$sql .="sum(salary_cash) as salary_cash, sum(	salary_transfer) as salary_transfer, ";
+		$sql .= "sum(salary_jclub) as salary_jclub , sum(salary_add) as salary_add, sum(`salary_minus`) as salary_minus ,";
+		$sql .=" max(salary_comment) as salary_comment";
 		$sql .=" FROM (SELECT * FROM `salary`  ";
     $sql .=" union all ";
 		$sql .="SELECT * FROM `salary_paid`) m ";
@@ -94,15 +93,10 @@
 		$sqlRec .= $sql;
 
 
-		//concatenate search sql if value exist
-		if(isset($where) && $where != '') {
 
-			$sqlTot .= $where;
-			$sqlRec .= $where;
-		}
 		if ($rp!=-1)
 
-		$sqlRec .= " where  DATE_FORMAT(`salary_month`,'%Y-%m')  = '".$datewhere."'	 group by `staff` , DATE_FORMAT(`salary_month`,'%Y-%m')";
+		$sqlRec .= " where  DATE_FORMAT(`salary_month`,'%Y-%m')  = '".$datewhere.$where."'	 group by `staff` , DATE_FORMAT(`salary_month`,'%Y-%m')";
 
 		//print $sqlRec	 ; die();
 		$qtot = mysqli_query($this->conn, $sqlTot) or die("error to fetch tot employees data"  .$sqlTot);
@@ -114,7 +108,7 @@
 
 		$json_data = array(
 			"current"            => intval($params['current']),
-			"rowCount"            => 10,
+			"rowCount"            => 100,
 			"total"    => intval($qtot->num_rows),
 			"rows"            => $data   // total data array
 			);

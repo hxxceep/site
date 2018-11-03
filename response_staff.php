@@ -81,7 +81,7 @@
 			$where .=" ORDER By ".key($params['sort']) .' '.current($params['sort'])." ";
 		}
 	   // getting total number records without any search
-		$sql = "SELECT * FROM `staff` ";
+		$sql = "SELECT CONCAT('WK',`staff_id`) as staff_id, `staff_name`, `staff_name_chi`, `staff_phone`, `staff_hkid`, `staff_district`, `staff_paymethod`, `staff_remark` FROM `staff` ";
 		$sqlTot .= $sql;
 		$sqlRec .= $sql;
 
@@ -122,7 +122,7 @@
 		$sql .="staff_district= '" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_district"]) ."',";
 		$sql .="staff_paymethod='" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_paymethod"]) ."', ";
 		$sql .="staff_remark='" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_remark"]) ."' ";
-		$sql .=" WHERE staff_id='".$_POST["edit_staff_id"]."'";
+		$sql .=" WHERE staff_id='".mysqli_real_escape_string($this->conn,str_replace("WK","" ,$_POST["edit_staff_id"]))."'";
 		//print_R($_POST);
 		//print_R($sql);die;
 		echo $result = mysqli_query($this->conn, $sql) or die("error to update staff data");
@@ -131,7 +131,7 @@
 	function deletestaff($params) {
 		$data = array();
 		//print_R($_POST);die;
-		$sql = "delete from `staff` WHERE staff_id='".mysqli_real_escape_string($this->conn,$params["id"])."'";
+		$sql = "delete from `staff` WHERE staff_id='".mysqli_real_escape_string($this->conn,,str_replace("WK","" ,$params["id"]))."'";
 
 		echo $result = mysqli_query($this->conn, $sql) or die("error to delete staff data");
 	}
