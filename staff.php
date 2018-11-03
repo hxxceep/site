@@ -226,11 +226,8 @@ $( document ).ready(function() {
         //alert("You pressed edit on row: " + $(this).data("row-id"));
 			var ele =$(this).parent();
 			var g_id = $(this).parent().siblings(':first').html();
-            var g_name = $(this).parent().siblings(':nth-of-type(2)').html();
-console.log(g_id);
-                    console.log(g_name);
+      var g_name = $(this).parent().siblings(':nth-of-type(2)').html();
 
-		//console.log(grid.data());//
 		$('#edit_model').modal('show');
 					if($(this).data("row-id") !="") {
 
@@ -249,8 +246,8 @@ console.log(g_id);
     }).end().find(".command-delete").on("click", function(e)
     {
 
-		var conf = confirm('Delete ' + $(this).data("row-id") + ' items?');
-					alert(conf);
+		var conf = confirm('確定刪除?');
+					//alert(conf);
                     if(conf){
                                 $.post('response_staff.php', { id: $(this).data("row-id"), action:'delete'}
                                     , function(){
@@ -274,6 +271,9 @@ function ajaxAction(action) {
 				  {
 					$('#'+action+'_model').modal('hide');
 					$("#staff_grid").bootgrid('reload');
+
+					$('#frm_add').trigger("reset");
+
 				  }
 				});
 			}

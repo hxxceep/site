@@ -150,7 +150,7 @@
           </div>
           <div class="modal-footer">
             <!--<button type="button" id="export-event" class="btn btn-warning">Export</button>-->
-            <button type="button" id="delete-event" class="btn btn-danger">刪除</button>
+            <button type="button" id="delete-event" class="btn btn-danger" onClick="return confirmDelete();">刪除</button>
             <button type="button" id="edit-event" class="btn btn-info">修改</button>
             <button type="button" id="add-event" class="btn btn-primary">増加</button>
             <button type="button" id="save-changes" class="btn btn-primary">儲存</button>

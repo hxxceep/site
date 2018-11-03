@@ -189,9 +189,9 @@ console.log(g_id);
     }).end().find(".command-delete").on("click", function(e)
     {
 
-		var conf = confirm('Delete ' + $(this).data("row-id") + ' items?');
+		var conf = confirm('確定刪除?');
 
-					alert(conf);
+					//alert(conf);
                     if(conf){
                                 $.post('response_company.php', { id: $(this).data("row-id"), action:'delete'}
                                     , function(){
