@@ -478,8 +478,11 @@
 					// Delete button
 					$('#delete-event').off().on('click', function(e)
 					{
+
+						if(confirmDelete()){
 						calendar.remove(calendar.id);
 						e.preventDefault();
+						}
 					});
 
 					 // Export button
@@ -504,7 +507,7 @@
 						$('#modal-form-body').show();
 
 
-						setTimeout(function(){ getJobPrice(); }, 3000);
+					//	setTimeout(function(){ getJobPrice(); }, 3000);
 						jQuery('#acompany').typeahead({
 								source: function (query, result) {
 										jQuery.ajax({

@@ -72,7 +72,8 @@ $('#calendarModal').on('show.bs.modal', function() {
 			}
 
 
-			function confirmDelete(){
+			function confirmDelete( ){
+
 				var conf = confirm('確定刪除?');
 
 						return conf;
