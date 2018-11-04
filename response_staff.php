@@ -57,7 +57,7 @@
 		$sql .=  	mysqli_real_escape_string($this->conn,$params["staff_remark"]) ;
 		$sql .= 	"');  ";
 //print($sql);die;
-		echo $result = mysqli_query($this->conn, $sql) or die("error to insert staff data");
+		echo $result = mysqli_query($this->conn, $sql) or json_encode(mysqli_error($con));
 
 	}
 
