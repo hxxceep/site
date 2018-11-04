@@ -80,7 +80,7 @@
 			   // getting total number records without any search
 		$sql = "SELECT concat('WK',staff) as id , (select staff_name_chi from staff where staff_id= staff)  as salary_staff , ";
 		$sql .= "(select staff_remark from staff where staff_id= staff)  as salary_staffcomment , ";
-		$sql .="sum(salary_paid) as salary_paid, sum(`salary_OS`+ `salary_add`  - `salary_minus`) as salary_monthly,sum(`salary_OS` -`salary_transfer` - `salary_cashcheck`- 'salary_paid' + `salary_add` - `salary_check` - `salary_cash`-`salary_jclub`  - `salary_minus`) as salary_remian, ";
+		$sql .="sum(`salary_paid`) as salary_paid, sum(`salary_OS`+ `salary_add`  - `salary_minus`) as salary_monthly,sum(`salary_OS` -`salary_transfer` - `salary_cashcheck`- 'salary_paid' + `salary_add` - `salary_check` - `salary_cash`-`salary_jclub`  - `salary_minus`) as salary_remian, ";
 		$sql .="sum(salary_tax) as salary_tax, DATE_FORMAT(`salary_month`,'%Y-%m') as salary_month,";
 		$sql .="sum(salary_check) as salary_check , sum(salary_cashcheck) as salary_cashcheck,  ";
 		$sql .="sum(salary_cash) as salary_cash, sum(	salary_transfer) as salary_transfer, ";
