@@ -271,10 +271,11 @@ function ajaxAction(action) {
 				  {
 					$('#'+action+'_model').modal('hide');
 					$("#staff_grid").bootgrid('reload');
-
 					$('#frm_add').trigger("reset");
-
-				  }
+				},
+					fail:function() {
+	 					alert( response );
+ 					}
 				});
 			}
 
