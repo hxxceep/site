@@ -273,8 +273,8 @@ function ajaxAction(action) {
 					$("#staff_grid").bootgrid('reload');
 					$('#frm_add').trigger("reset");
 					},
-					fail:function(response) {
-	 					alert( response );
+					error:function(response) {
+	 					alert(response.responseText);
  					}
 				});
 			}
