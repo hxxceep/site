@@ -77,7 +77,7 @@
 			$where .=" OR company_contact LIKE '".$params['searchPhrase']."%' )";
 	   }
 	   if( !empty($params['sort']) ) {
-			$where .=" ORDER By ".key($params['sort']) .' '.current($params['sort'])." , company_place";
+			$where .=" ORDER By ".key($params['sort']) .' '.current($params['sort'])." , company_place , company_time";
 		}
 	   // getting total number records without any search
 		$sql = "SELECT * FROM `company` ";
