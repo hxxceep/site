@@ -59,7 +59,7 @@ $('#calendarModal').on('show.bs.modal', function() {
 
 					var total = parseInt($("#staff_salary").val()*1)+ parseInt($("#staff_salary_OT").val()*1)
 					var staffname = $("#astaff").val().replace("," , "").split(";")[0];
-					$("#stafflist").val($("#stafflist").val()  + staffname+ "," + total +  '\r\n')
+					$("#stafflist").val($("#stafflist").val()  + staffname+ "," + total + ","+ (parseInt($("#staff_salary_OT").val()*1)) '\r\n')
 					$("#stafflist").val(	$("#stafflist").val().replace(/\n\s*\n/g, '\n'));
 					$("#astaff").val("");
 
