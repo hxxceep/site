@@ -39,7 +39,7 @@
 
 
             		<label>工作地點/時間: </label>
-                	<input class="form-control" onchange="getJobPrice()" name="title" value="" type="text" id="acompany" autocomplete="off">
+                	<input class="form-control" name="title" value="" type="text" id="acompany" autocomplete="off">
                 </p>
 
 
