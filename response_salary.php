@@ -95,9 +95,9 @@
 		$sqlRec .= " where  DATE_FORMAT(`salary_month`,'%Y-%m')  = '".$datewhere."'	 group by `staff` , DATE_FORMAT(`salary_month`,'%Y-%m')";
 
 
-		if( !empty($params['searchPhrase']) ) {
+		if( !strlen($params['searchPhrase']) ) {
 		//	$where .=" DATE_FORMAT(`salary_month`,'%Y-%m') like '".$params['searchPhrase']."' ";
-			$sql .=   "select * from (".$sql." ) a where a.salary_staff LIKE '%".$params['searchPhrase']."%' 	";
+			$sqlRec =   "select * from (".$sqlRec." ) a where a.salary_staff LIKE '%".$params['searchPhrase']."%' 	";
 	   }
 
 		//print $sqlRec	 ; die();
