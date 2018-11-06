@@ -55,10 +55,6 @@
 
 		$sql = $sqlRec = $sqlTot = $where = '';
 
-		if( !empty($params['searchPhrase']) ) {
-		//	$where .=" DATE_FORMAT(`salary_month`,'%Y-%m') like '".$params['searchPhrase']."' ";
-			$where .=" salary_staff LIKE '%".$params['searchPhrase']."%' 	";
-	   }
 
 
 		 /*
@@ -96,7 +92,13 @@
 
 		if ($rp!=-1)
 
-		$sqlRec .= " where  DATE_FORMAT(`salary_month`,'%Y-%m')  = '".$datewhere.$where."'	 group by `staff` , DATE_FORMAT(`salary_month`,'%Y-%m')";
+		$sqlRec .= " where  DATE_FORMAT(`salary_month`,'%Y-%m')  = '".$datewhere."'	 group by `staff` , DATE_FORMAT(`salary_month`,'%Y-%m')";
+
+
+		if( !empty($params['searchPhrase']) ) {
+		//	$where .=" DATE_FORMAT(`salary_month`,'%Y-%m') like '".$params['searchPhrase']."' ";
+			$sql .=   "select * from (".$sql." ) a where a.salary_staff LIKE '%".$params['searchPhrase']."%' 	";
+	   }
 
 		//print $sqlRec	 ; die();
 		$qtot = mysqli_query($this->conn, $sqlTot) or die("error to fetch tot employees data"  .$sqlTot);
