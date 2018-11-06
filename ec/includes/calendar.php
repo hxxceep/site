@@ -351,7 +351,7 @@
 			$post['end_date'] = mysqli_real_escape_string($this->connection, htmlspecialchars($post['end_date']));
 			$post['end_time'] = mysqli_real_escape_string($this->connection, htmlspecialchars($post['end_time']));
 			$post['all-day'] = mysqli_real_escape_string($this->connection, $post['all-day']);
-			$post['color'] = mysqli_real_escape_string($this->connection,"#".substr(md5($post['categorie']),1,6););
+			$post['color'] = mysqli_real_escape_string($this->connection,"#".substr(md5($post['categorie']),1,6));
 			$post['url'] = mysqli_real_escape_string($this->connection, htmlspecialchars($post['url']));
 			$post['categorie'] = mysqli_real_escape_string($this->connection, htmlspecialchars($post['categorie'], ENT_COMPAT, 'UTF-8'));
 			$post['user_id'] = mysqli_real_escape_string($this->connection, htmlspecialchars($post['user_id']));
