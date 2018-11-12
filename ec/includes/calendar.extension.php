@@ -273,9 +273,12 @@
 		for ($x = 0; $x <= count($rows); $x++) {
 			$staffsallary = explode(',',$rows[$x]);
 			$staffid = explode(':',$staffsallary[0]);
+			$staffsallary[1] = intval($staffsallary[1]);
+
 
 			if(!empty($staffsallary[0]) && is_numeric($staffsallary[1]) && is_numeric($staffid[0])){
-				$strq = "insert into salary (staff, salary_OS, salary_month,pid) values('".$staffid[0]."', ".$staffsallary[1].",'".$month."',".$pid.") ON DUPLICATE KEY UPDATE salary_OS= ".$staffsallary[1].";";
+				$strq = "insert into salary (staff, salary_OS, salary_month,pid) values('".$staffid[0]."', ".intval($staffsallary[1]).",'".$month."',".$pid.") ON DUPLICATE KEY UPDATE salary_OS= ".intval($staffsallary[1]).";";
+			//print $strq;
 				$query =  mysqli_query($this->connection, $strq);
 
 			}
