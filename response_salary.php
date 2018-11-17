@@ -92,7 +92,7 @@
 
 		if ($rp!=-1)
 
-		$sqlRec .= " where  DATE_FORMAT(`salary_month`,'%Y-%m')  = '".$datewhere."'	 group by `staff` , DATE_FORMAT(`salary_month`,'%Y-%m')";
+		$sqlRec .= " where salary_month <= CURDATE() AND DATE_FORMAT(`salary_month`,'%Y-%m')  = '".$datewhere."'	 group by `staff` , DATE_FORMAT(`salary_month`,'%Y-%m')";
 
 
 		if( !empty($params['searchPhrase']) ) {
