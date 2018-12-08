@@ -72,7 +72,7 @@
 
 
 			$select =	"select gg.cid, comname,comtime, gg.start, count(gg.start) gc ,company_price  , company_comment ,company_contact ,company_name from (";
-			$select .= " select * from (SELECT  substring_index(`title`,',',1) comname , substring_index(`title`,',',-1) comtime, day(`start`) as `start`  FROM `calendar` WHERE month(`start`) = 11) cal";
+			$select .= " select * from (SELECT  substring_index(`title`,',',1) comname , substring_index(`title`,',',-1) comtime, day(`start`) as `start`  FROM `calendar` WHERE month(`start`) = ".$c_moneth." && year(`start`) = ".$c_yaer." ) cal";
 			$select .= " left join ";
 			$select .= " (select * from company) com on cal.comname = com.`company_place` and cal.comtime = com.company_time order by cid , start) gg";
 			$select .= " group by comname, gg.start";
@@ -115,7 +115,7 @@
 		$header .= $j.",";
 	}
 
-	$select =	"select `staff` ,(select staff_name_chi from staff where staff.staff_id = s.staff) as `chinam`, `salary_OS` , day(`salary_month`) as `salary_month` from salary s where MONTH(`salary_month`)= 11";
+	$select =	"select `staff` ,(select staff_name_chi from staff where staff.staff_id = s.staff) as `chinam`, `salary_OS` , day(`salary_month`) as `salary_month` from salary s where MONTH(`salary_month`)= ".$c_moneth." && year(`salary_month`) = ".$c_yaer."";
 	$select .= " order by CONVERT(SUBSTRING_INDEX(s.staff,'-',-1),UNSIGNED INTEGER) ,`salary_month` ASC";
 	$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
 
