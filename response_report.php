@@ -66,21 +66,21 @@
 			$header .= $j.",";
 		}
 
-			$cur_m = explode("-",$param['m']);
+			$cur_m = explode("-",$params['m']);
 			$c_moneth = intval ($cur_m[1]);
-			$c_yaer =intval ($cur_m[0]);
+			$c_year =intval ($cur_m[0]);
 
 
 			$select =	"select gg.cid, comname,comtime, gg.start, count(gg.start) gc ,company_price  , company_comment ,company_contact ,company_name from (";
-			$select .= " select * from (SELECT  substring_index(`title`,',',1) comname , substring_index(`title`,',',-1) comtime, day(`start`) as `start`  FROM `calendar` WHERE month(`start`) = ".$c_moneth." && year(`start`) = ".$c_yaer." ) cal";
+			$select .= " select * from (SELECT  substring_index(`title`,',',1) comname , substring_index(`title`,',',-1) comtime, day(`start`) as `start`  FROM `calendar` WHERE month(`start`) = ".$c_moneth." && YEAR(`start`) = ".$c_year." ) cal";
 			$select .= " left join ";
 			$select .= " (select * from company) com on cal.comname = com.`company_place` and cal.comtime = com.company_time order by cid , start) gg";
 			$select .= " group by comname, gg.start";
 
 			$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
 
-			//	$array_com = array();
-			//	$array_sum = array();
+				$array_com = array();
+				$array_sum = array();
 
 				while( $row = mysqli_fetch_row( $export ) )
 				{
@@ -90,7 +90,8 @@
 
 				//var_dump($array_com);
 				//var_dump($array_sum);
-				$date = "";
+				$data = "";
+
 					foreach($array_com as $key => $value) {
 							$data .= "\n".$value.",";
 							for($j=1;$j<=31;$j++){
@@ -102,6 +103,7 @@
 							}
 
 					}
+
 					$this->exporttext($header,$data);
 
 	}
@@ -115,7 +117,11 @@
 		$header .= $j.",";
 	}
 
-	$select =	"select `staff` ,(select staff_name_chi from staff where staff.staff_id = s.staff) as `chinam`, `salary_OS` , day(`salary_month`) as `salary_month` from salary s where MONTH(`salary_month`)= ".$c_moneth." && year(`salary_month`) = ".$c_yaer."";
+	$cur_m = explode('-',$params['m']);
+	$c_moneth = intval ($cur_m[1]);
+	$c_year =intval ($cur_m[0]);
+
+	$select =	"select `staff` ,(select staff_name_chi from staff where staff.staff_id = s.staff) as `chinam`, `salary_OS` , day(`salary_month`) as `salary_month` from salary s where MONTH(`salary_month`)= ".$c_moneth." && year(`salary_month`) = ".$c_year."";
 	$select .= " order by CONVERT(SUBSTRING_INDEX(s.staff,'-',-1),UNSIGNED INTEGER) ,`salary_month` ASC";
 	$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
 

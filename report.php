@@ -68,6 +68,7 @@ overflow-x: scroll;
        $( document ).ready(function() {
 
           genPeriod();
+          $("#period option:last").attr("selected", "selected");
          $( "#period" ).change(function() {
 
            $(".btn").each(function(index){
