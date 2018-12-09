@@ -67,12 +67,12 @@
 		}
 
 			$cur_m = explode("-",$params['m']);
-			$c_moneth = intval ($cur_m[1]);
+			$c_month = intval ($cur_m[1]);
 			$c_year =intval ($cur_m[0]);
 
 
 			$select =	"select gg.cid, comname,comtime, gg.start, count(gg.start) gc ,company_price  , company_comment ,company_contact ,company_name from (";
-			$select .= " select * from (SELECT  substring_index(`title`,',',1) comname , substring_index(`title`,',',-1) comtime, day(`start`) as `start`  FROM `calendar` WHERE month(`start`) = ".$c_moneth." && YEAR(`start`) = ".$c_year." ) cal";
+			$select .= " select * from (SELECT  substring_index(`title`,',',1) comname , substring_index(`title`,',',-1) comtime, day(`start`) as `start`  FROM `calendar` WHERE month(`start`) = ".$c_month." && YEAR(`start`) = ".$c_year." ) cal";
 			$select .= " left join ";
 			$select .= " (select * from company) com on cal.comname = com.`company_place` and cal.comtime = com.company_time order by cid , start) gg";
 			$select .= " group by comname, gg.start";
@@ -111,17 +111,29 @@
 
 	function getAllStaffMonthSalary($params)
 	{
-	$header = "員工,英名,";
+	$header = "員工,姓名,支票,現票,現金,轉帳,馬會,補錢,扣錢,備註,";
 
 	for($j=1;$j<=31;$j++){
 		$header .= $j.",";
 	}
 
 	$cur_m = explode('-',$params['m']);
-	$c_moneth = intval ($cur_m[1]);
+	$c_month = intval ($cur_m[1]);
 	$c_year =intval ($cur_m[0]);
 
-	$select =	"select `staff` ,(select staff_name_chi from staff where staff.staff_id = s.staff) as `chinam`, `salary_OS` , day(`salary_month`) as `salary_month` from salary s where MONTH(`salary_month`)= ".$c_moneth." && year(`salary_month`) = ".$c_year."";
+
+
+  $select2 =	" SELECT `staff`,`salary_check`,`salary_cashcheck`,`salary_paid`,`salary_transfer`,`salary_jclub` ,`salary_add`,`salary_minus`,`salary_comment` FROM `salary_paid` WHERE year(`salary_month`) = ".$c_year." AND month(`salary_month`) =".$c_month;
+	$arry_paid = array();
+	$export2 = mysqli_query ( $this->conn, $select2 ) or die ( "Sql error : " . mysql_error( ) );
+
+	while( $row2 = mysqli_fetch_row( $export2 ) )
+	{
+		$arry_paid[$row2[0]]= ",".$row2[1].",".$row2[2].",".$row2[3].",".$row2[4].",".$row2[5].",".$row2[6].",".$row2[7];
+	}
+
+
+	$select =	"select `staff` ,(select staff_name_chi from staff where staff.staff_id = s.staff) as `chinam`, `salary_OS` , day(`salary_month`) as `salary_month` from salary s where MONTH(`salary_month`)= ".$c_month." && year(`salary_month`) = ".$c_year."";
 	$select .= " order by CONVERT(SUBSTRING_INDEX(s.staff,'-',-1),UNSIGNED INTEGER) ,`salary_month` ASC";
 	$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
 
@@ -135,7 +147,13 @@
 				//$data = str_replace( "\r" , "" , $data );
 				//var_dump($alert_array);
 				foreach($alert_array as $name => $value) {
-					$data .= "\n".$name;
+					$sid = str_replace("WK", "" ,explode(",",$name)[0]);//	$data.=	$arry_paid[$row[0]];
+
+					if(isset($arry_paid[$sid])){
+					$data .= "\n".$name. $arry_paid[$sid];
+					}else{
+					$data .= "\n".$name .str_repeat(",",6);
+					}
 					$i = 0;
 			   	foreach ($value as $key2 => $value2) {
 
@@ -143,11 +161,12 @@
 							$data .= ",";
 							$i++;
 						}
-
 			   		$data .= $value2;
 			   	}
 			}
 
+
+		//	print $data;
  			$this->exporttext($header,$data);
 	}
 
