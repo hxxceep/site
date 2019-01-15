@@ -265,9 +265,9 @@
 
 
 		$strq = "delete from salary where pid =".$pid;
-
+		$ot = 0;
 		$query =  mysqli_query($this->connection, $strq);
-
+		$staff = str_replace(' ',''$staff);
 		$rows = preg_split('/\n|\r\n?/', $staff);
 
 		for ($x = 0; $x <= count($rows); $x++) {
@@ -275,9 +275,14 @@
 			$staffid = explode(':',$staffsallary[0]);
 			$staffsallary[1] = intval($staffsallary[1]);
 
+			if (!isempty($staffsallary[2])){
+					$ot  = intval(str_replace("OT","",$staffsallary[2]);
+			}
+
+
 
 			if(!empty($staffsallary[0]) && is_numeric($staffsallary[1]) && is_numeric($staffid[0])){
-				$strq = "insert into salary (staff, salary_OS, salary_month,pid) values('".$staffid[0]."', ".intval($staffsallary[1]).",'".$month."',".$pid.") ON DUPLICATE KEY UPDATE salary_OS= ".intval($staffsallary[1]).";";
+				$strq = "insert into salary (staff, salary_OS, salary_month,pid,salary_OT) values('".$staffid[0]."', ".intval($staffsallary[1]).",'".$month."',".$pid .",". $ot.") ON DUPLICATE KEY UPDATE salary_OS= ".intval($staffsallary[1]).";";
 			//print $strq;
 				$query =  mysqli_query($this->connection, $strq);
 
