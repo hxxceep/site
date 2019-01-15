@@ -267,7 +267,7 @@
 		$strq = "delete from salary where pid =".$pid;
 		$ot = 0;
 		$query =  mysqli_query($this->connection, $strq);
-		$staff = str_replace(' ',''$staff);
+		$staff = str_replace(' ','',$staff);
 		$rows = preg_split('/\n|\r\n?/', $staff);
 
 		for ($x = 0; $x <= count($rows); $x++) {
