@@ -275,6 +275,7 @@
 			$staffid = explode(':',$staffsallary[0]);
 			$staffsallary[1] = intval($staffsallary[1]);
 
+			if (sizeof($staffsallary) > 1)
 			if (!isempty($staffsallary[2])){
 					$ot  = intval(str_replace("OT","",$staffsallary[2]));
 			}
