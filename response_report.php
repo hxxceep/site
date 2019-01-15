@@ -111,7 +111,7 @@
 
 	function getAllStaffMonthSalary($params)
 	{
-	$header = "員工,姓名,支票,現票,現金,轉帳,馬會,補錢,扣錢,OT,備註,";
+	$header = "員工,姓名,支票,現票,現金,轉帳,馬會,補錢,扣錢,備註,OT,";
 
 	for($j=1;$j<=31;$j++){
 		$header .= $j.",";
@@ -123,36 +123,38 @@
 
 
 
-  $select2 =	" SELECT `staff`,`salary_check`,`salary_cashcheck`,`salary_paid`,`salary_transfer`,`salary_jclub` ,`salary_add`,`salary_minus`,`salary_OT`,`salary_comment`  FROM `salary_paid` WHERE year(`salary_month`) = ".$c_year." AND month(`salary_month`) =".$c_month;
+  $select2 =	" SELECT `staff`,`salary_check`,`salary_cashcheck`,`salary_paid`,`salary_transfer`,`salary_jclub` ,`salary_add`,`salary_minus`,`salary_comment`  FROM `salary_paid` WHERE year(`salary_month`) = ".$c_year." AND month(`salary_month`) =".$c_month;
 	$arry_paid = array();
 	$export2 = mysqli_query ( $this->conn, $select2 ) or die ( "Sql error : " . mysql_error( ) );
 
 	while( $row2 = mysqli_fetch_row( $export2 ) )
 	{
-		$arry_paid[$row2[0]]= ",".$row2[1].",".$row2[2].",".$row2[3].",".$row2[4].",".$row2[5].",".$row2[6].",".$row2[7].",".$row2[8].",".$row2[9]. " ";
+		$arry_paid[$row2[0]]= ",".$row2[1].",".$row2[2].",".$row2[3].",".$row2[4].",".$row2[5].",".$row2[6].",".$row2[7].",".$row2[8];
 	}
 
 
 	$select =	"select `staff` ,(select staff_name_chi from staff where staff.staff_id = s.staff) as `chinam`, `salary_OS` , day(`salary_month`) as `salary_month` ,`salary_OT` from salary s where MONTH(`salary_month`)= ".$c_month." && year(`salary_month`) = ".$c_year."";
 	$select .= " order by CONVERT(SUBSTRING_INDEX(s.staff,'-',-1),UNSIGNED INTEGER) ,`salary_month` ASC";
 	$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
-
+	//print $select ;die();
 	 	$alert_array = array();
 		$alert_array_OT = array();
 
 				while( $row = mysqli_fetch_row( $export ) )
 				{
 						$alert_array["WK".$row[0].",".$row[1]][$row[3]] = $row[2];
-						$alert_array_OT[$row[0]] = $row[4];
+						$alert_array_OT["WK".$row[0].",".$row[1]] += $row[4];
 				}
 				$data ="";
+				//print_r($alert_array_OT);
+				//die();
 				//$data = str_replace( "\r" , "" , $data );
 				//var_dump($alert_array);
 				foreach($alert_array as $name => $value) {
 					$sid = str_replace("WK", "" ,explode(",",$name)[0]);//	$data.=	$arry_paid[$row[0]];
 
 					if(isset($arry_paid[$sid])){
-					$data .= "\n".$name. $arry_paid[$sid].",".$alert_array_OT[$sid];
+					$data .= "\n".$name. $arry_paid[$sid].",".$alert_array_OT[$name];
 					}else{
 					$data .= "\n".$name .str_repeat(",",9 );
 					}
