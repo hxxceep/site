@@ -133,15 +133,17 @@
 	}
 
 
-	$select =	"select `staff` ,(select staff_name_chi from staff where staff.staff_id = s.staff) as `chinam`, `salary_OS` , day(`salary_month`) as `salary_month` from salary s where MONTH(`salary_month`)= ".$c_month." && year(`salary_month`) = ".$c_year."";
+	$select =	"select `staff` ,(select staff_name_chi from staff where staff.staff_id = s.staff) as `chinam`, `salary_OS` , day(`salary_month`) as `salary_month` ,`salary_OT` from salary s where MONTH(`salary_month`)= ".$c_month." && year(`salary_month`) = ".$c_year."";
 	$select .= " order by CONVERT(SUBSTRING_INDEX(s.staff,'-',-1),UNSIGNED INTEGER) ,`salary_month` ASC";
 	$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
 
 	 	$alert_array = array();
+		$alert_array_OT = array();
 
 				while( $row = mysqli_fetch_row( $export ) )
 				{
 						$alert_array["WK".$row[0].",".$row[1]][$row[3]] = $row[2];
+						$alert_array_OT[$row[0]] = $row[4];
 				}
 				$data ="";
 				//$data = str_replace( "\r" , "" , $data );
@@ -150,9 +152,9 @@
 					$sid = str_replace("WK", "" ,explode(",",$name)[0]);//	$data.=	$arry_paid[$row[0]];
 
 					if(isset($arry_paid[$sid])){
-					$data .= "\n".$name. $arry_paid[$sid];
+					$data .= "\n".$name. $arry_paid[$sid].",".$alert_array_OT[$sid];
 					}else{
-					$data .= "\n".$name .str_repeat(",",8 );
+					$data .= "\n".$name .str_repeat(",",9 );
 					}
 					$i = 0;
 			   	foreach ($value as $key2 => $value2) {
