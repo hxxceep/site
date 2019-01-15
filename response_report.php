@@ -111,7 +111,7 @@
 
 	function getAllStaffMonthSalary($params)
 	{
-	$header = "員工,姓名,支票,現票,現金,轉帳,馬會,補錢,扣錢,備註,";
+	$header = "員工,姓名,支票,現票,現金,轉帳,馬會,補錢,扣錢,OT,備註,";
 
 	for($j=1;$j<=31;$j++){
 		$header .= $j.",";
@@ -123,7 +123,7 @@
 
 
 
-  $select2 =	" SELECT `staff`,`salary_check`,`salary_cashcheck`,`salary_paid`,`salary_transfer`,`salary_jclub` ,`salary_add`,`salary_minus`,`salary_comment` FROM `salary_paid` WHERE year(`salary_month`) = ".$c_year." AND month(`salary_month`) =".$c_month;
+  $select2 =	" SELECT `staff`,`salary_check`,`salary_cashcheck`,`salary_paid`,`salary_transfer`,`salary_jclub` ,`salary_add`,`salary_minus`,`salary_OT`,`salary_comment`  FROM `salary_paid` WHERE year(`salary_month`) = ".$c_year." AND month(`salary_month`) =".$c_month;
 	$arry_paid = array();
 	$export2 = mysqli_query ( $this->conn, $select2 ) or die ( "Sql error : " . mysql_error( ) );
 
