@@ -184,17 +184,17 @@
 
 
 	function getYearSalary($params){
-			$header = "員工,姓名,支票,現票,現金,轉帳,馬會,補錢,扣錢,備註,OT,";
+			$header = "年,員工,姓名,支票,現票,現金,轉帳,馬會,補錢,扣錢";
 			$cur_m = explode('-',$params['m']);
 			$c_month = intval ($cur_m[1]);
 			$c_year =intval ($cur_m[0]);
 
 			$data ="";
-			$select = "SELECT sp.staff, (select staff_name_chi from staff where staff.staff_id = sp.staff) as `chinam` , sum(sp.salary_check) , sum(sp.salary_cashcheck), sum(sp.salary_paid) , sum(sp.salary_transfer), sum(sp.salary_jclub) ,sum(sp.salary_add) , sum(sp.salary_minus) FROM `salary_paid` sp where year(`salary_month`) =2019 group by staff";
+			$select = "SELECT year(`salary_month`), CONCAT('WK', sp.staff), (select staff_name_chi from staff where staff.staff_id = sp.staff) as `chinam` , sum(sp.salary_check) , sum(sp.salary_cashcheck), sum(sp.salary_paid) , sum(sp.salary_transfer), sum(sp.salary_jclub) ,sum(sp.salary_add) , sum(sp.salary_minus) FROM `salary_paid` sp where year(`salary_month`) = ".$c_year." group by staff order by CONVERT(SUBSTRING_INDEX(staff,'-',-1),UNSIGNED INTEGER) asc";
 			$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
 				while( $row = mysqli_fetch_row( $export ) )
 				{
-						$data .= "\n". $row[0] .",". $row[1] .",". $row[2] .",". $row[3] .",". $row[4] .",". $row[5]
+						$data .= "\n". $row[0] .",". $row[1] .",". $row[2] .",". $row[3] .",". $row[4] .",". $row[5].",". $row[6].",". $row[7].",". $row[8].",". $row[9];
 				}
 
 				$this->exporttext($header,$data);
