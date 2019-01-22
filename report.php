@@ -32,6 +32,7 @@ overflow-x: scroll;
         <a class="btn btn-primary btn-lg" href="response_report.php?action=&m=<?php echo date("Y-m");?>  "> 全部員工 </a> <BR/>
         <a class="btn btn-primary btn-lg" href="response_report.php?action=month&m=<?php echo date("Y-m");?> "> 每月薪金 </a><BR/>
         <a class="btn btn-primary btn-lg" href="response_report.php?action=company&m=<?php echo date("Y-m");?> "> 公司報表 </a><BR/>
+        <a class="btn btn-primary btn-lg" href="response_report.php?action=year&m=<?php echo date("Y-m");?> "> 全年薪金 </a><BR/>
 
 
      </div>

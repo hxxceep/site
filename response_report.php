@@ -17,8 +17,8 @@
 	 case 'company':
 		$empCls->getAllCompanyDayCount($params);
 	 break;
-	 case 'delete':
-		$empCls->deleteEmployee($params);
+	 case 'year':
+		$empCls->getYearSalary($params);
 	 break;
 	 default:
 	 $empCls->getRecords($params);
@@ -60,7 +60,7 @@
 
 	function getAllCompanyDayCount($params){
 
-		$header = "公司,時間,單價,聯絡資料,備註,";
+		$header = "公司,時間,單價,聯絡資料,備註,OT,";
 
 		for($j=1;$j<=31;$j++){
 			$header .= $j.",";
@@ -77,6 +77,14 @@
 			$select .= " (select * from company) com on cal.comname = com.`company_place` and cal.comtime = com.company_time order by cid , start) gg";
 			$select .= " group by comname, gg.start";
 
+			$select =	 "select ff.* , cc.ot from (select gg.cid, comname,comtime, gg.start, count(gg.start) gc ,company_price , company_comment ,company_contact ,company_name ,title from ";
+			$select .= "( select * from (SELECT substring_index(`title`,',',1) comname , substring_index(`title`,',',-1) comtime, day(`start`) as `start` , `title` FROM `calendar` ";
+			$select .= "WHERE month(`start`) = ".$c_month." && YEAR(`start`) = ".$c_year." ) cal left join ";
+			$select .= "(select * from company) com on cal.comname = com.`company_place` and cal.comtime = com.company_time order by cid , start) gg ";
+			$select .= "group by comname, gg.start) ff left join ";
+			$select .= "(select sum(s.salary_OT) OT , pid , salary_month ,c.title from salary s left join calendar c on s.pid = c.id  ";
+			$select .= "where s.`salary_OT` >0 and month(`start`) = ".$c_month." && YEAR(`start`) = ".$c_year." group by title ) cc on ff.title = cc.title ";
+
 			$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
 
 				$array_com = array();
@@ -84,7 +92,7 @@
 
 				while( $row = mysqli_fetch_row( $export ) )
 				{
-						$array_com[$row[0]] = $row[1]."," .$row[2]."," .$row[5].",".$row[6].",".$row[7];
+						$array_com[$row[0]] = $row[1]."," .$row[2]."," .$row[5].",".$row[6].",".$row[7].",".$row[10];
 						$array_sum[$row[0].",".$row[3]] = $row[4];
 				}
 
@@ -174,6 +182,24 @@
  			$this->exporttext($header,$data);
 	}
 
+
+	function getYearSalary($params){
+			$header = "員工,姓名,支票,現票,現金,轉帳,馬會,補錢,扣錢,備註,OT,";
+			$cur_m = explode('-',$params['m']);
+			$c_month = intval ($cur_m[1]);
+			$c_year =intval ($cur_m[0]);
+
+			$data ="";
+			$select = "SELECT sp.staff, (select staff_name_chi from staff where staff.staff_id = sp.staff) as `chinam` , sum(sp.salary_check) , sum(sp.salary_cashcheck), sum(sp.salary_paid) , sum(sp.salary_transfer), sum(sp.salary_jclub) ,sum(sp.salary_add) , sum(sp.salary_minus) FROM `salary_paid` sp where year(`salary_month`) =2019 group by staff";
+			$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
+				while( $row = mysqli_fetch_row( $export ) )
+				{
+						$data .= "\n". $row[0] .",". $row[1] .",". $row[2] .",". $row[3] .",". $row[4] .",". $row[5]
+				}
+
+				$this->exporttext($header,$data);
+
+	}
 
 
 	function getRecords($params) {
