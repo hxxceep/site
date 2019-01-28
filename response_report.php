@@ -184,7 +184,7 @@
 
 
 	function getYearSalary($params){
-			$header = "年,員工,姓名,支票,現票,現金,轉帳,馬會,補錢,扣錢";
+			$header = "年,員工,姓名,支票,現票,現金,轉帳,馬會,補錢,扣錢,總數";
 			$cur_m = explode('-',$params['m']);
 			$c_month = intval ($cur_m[1]);
 			$c_year =intval ($cur_m[0]);
@@ -196,7 +196,7 @@
 				while( $row = mysqli_fetch_row( $export ) )
 				{
 					$total = intval($row[3]) + intval($row[4]) + intval($row[5]) + intval( $row[6]) +intval($row[7])+ intval($row[8])+intval($row[9]);
-						$data .= "\n". $row[0] .",". $row[1] .",". $row[2] .",". $row[3] .",". $row[4] .",". $row[5].",". $row[6].",". $row[7].",". $row[8].",". $row[9];
+						$data .= "\n". $row[0] .",". $row[1] .",". $row[2] .",". $row[3] .",". $row[4] .",". $row[5].",". $row[6].",". $row[7].",". $row[8].",". $row[9] .",".$total;
 				}
 
 				$this->exporttext($header,$data);
