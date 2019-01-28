@@ -63,7 +63,7 @@
 
 
 	function getRecords($params) {
-		$rp = isset($params['rowCount']) ? $params['rowCount'] : 10;
+		$rp = isset($params['rowCount']) ? $params['rowCount'] : 10000;
 
 		if (isset($params['current'])) { $page  = $params['current']; } else { $page=1; };
         $start_from = ($page-1) * $rp;
