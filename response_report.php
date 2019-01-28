@@ -190,10 +190,12 @@
 			$c_year =intval ($cur_m[0]);
 
 			$data ="";
-			$select = "SELECT year(`salary_month`), CONCAT('WK', sp.staff), (select staff_name_chi from staff where staff.staff_id = sp.staff) as `chinam` , sum(sp.salary_check) , sum(sp.salary_cashcheck), sum(sp.salary_paid) , sum(sp.salary_transfer), sum(sp.salary_jclub) ,sum(sp.salary_add) , sum(sp.salary_minus) FROM `salary_paid` sp where year(`salary_month`) = ".$c_year." group by staff order by CONVERT(SUBSTRING_INDEX(staff,'-',-1),UNSIGNED INTEGER) asc";
+			//$select = "SELECT CONCAT(year(`salary_month`),'-',month(`salary_month`)), CONCAT('WK', sp.staff), (select staff_name_chi from staff where staff.staff_id = sp.staff) as `chinam` , sum(sp.salary_check) , sum(sp.salary_cashcheck), sum(sp.salary_paid) , sum(sp.salary_transfer), sum(sp.salary_jclub) ,sum(sp.salary_add) , sum(sp.salary_minus) FROM `salary_paid` sp where year(`salary_month`) = ".$c_year." group by staff , salary_month order by CONVERT(SUBSTRING_INDEX(staff,'-',-1),UNSIGNED INTEGER) asc";
+			$select = "SELECT CONCAT(year(`salary_month`),'-',month(`salary_month`)), CONCAT('WK', sp.staff), (select staff_name_chi from staff where staff.staff_id = sp.staff) as `chinam` , sum(sp.salary_check) , sum(sp.salary_cashcheck), sum(sp.salary_paid) , sum(sp.salary_transfer), sum(sp.salary_jclub) ,sum(sp.salary_add) , sum(sp.salary_minus) FROM `salary_paid` sp  group by staff , salary_month order by CONVERT(SUBSTRING_INDEX(staff,'-',-1),UNSIGNED INTEGER) asc";
 			$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
 				while( $row = mysqli_fetch_row( $export ) )
 				{
+					$total = intval($row[3]) + intval($row[4]) + intval($row[5]) + intval( $row[6]) +intval($row[7])+ intval($row[8])+intval($row[9]);
 						$data .= "\n". $row[0] .",". $row[1] .",". $row[2] .",". $row[3] .",". $row[4] .",". $row[5].",". $row[6].",". $row[7].",". $row[8].",". $row[9];
 				}
 

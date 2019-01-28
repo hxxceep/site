@@ -268,7 +268,8 @@
 		$ot = 0;
 		$query =  mysqli_query($this->connection, $strq);
 		$staff = str_replace(' ','',$staff);
-		$rows = preg_split('/\n|\r\n?/', $staff);
+		//$staff = str_replace(array("\r\n", "\r", "\n"), "", $staff);
+		$rows = preg_split('/;|\r|\n|\r\n?/', $staff);
 
 		for ($x = 0; $x <= count($rows); $x++) {
 			$staffsallary = explode(',',$rows[$x]);

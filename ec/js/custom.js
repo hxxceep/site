@@ -63,7 +63,7 @@ $('#calendarModal').on('show.bs.modal', function() {
 
 					if (parseInt($("#staff_salary_OT").val()*1) > 0)
 					$("#stafflist").val(	$("#stafflist").val() + ", OT"+ (parseInt($("#staff_salary_OT").val()*1)));
-					$("#stafflist").val(	$("#stafflist").val() + '\r\n');
+					$("#stafflist").val(	$("#stafflist").val() + ';\r\n');
 					$("#stafflist").val(	$("#stafflist").val().replace(/\n\s*\n/g, '\n'));
 					$("#astaff").val("");
 
