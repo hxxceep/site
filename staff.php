@@ -60,8 +60,12 @@
                     <input type="text" class="form-control" id="staff_name" name="staff_name" 	/>
                   </div>
 									<div class="form-group">
-                    <label for="staff" class="control-label">姓名(中):</label>
-                    <input type="text" class="form-control" id="staff_name_chi" name="staff_name_chi" 	/>
+                    <label for="sex" class="control-label">性别</label>
+										<select class="form-control"  id="staff_sex" name="staff_sex">
+											<option></option>
+											<option>M</option>
+											<option>F</option>
+										</select>
                   </div>
 									<div class="form-group">
 										<label for="staff" class="control-label">電話:</label>
@@ -140,6 +144,14 @@
 											<div class="form-group">
 												<label for="staff" class="control-label">姓名(中):</label>
 												<input type="text" class="form-control" id="edit_staff_name_chi" name="edit_staff_name_chi" 	/>
+											</div>
+											<div class="form-group">
+												<label for="sex" class="control-label">性别</label>
+												<select class="form-control"  id="edit_staff_sex" name="edit_staff_sex">
+													<option></option>
+													<option>M</option>
+													<option>F</option>
+												</select>
 											</div>
 											<div class="form-group">
 												<label for="staff" class="control-label">電話:</label>
