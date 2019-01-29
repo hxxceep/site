@@ -10,7 +10,7 @@
 <script src="lib/timepicker/jquery-ui-sliderAccess.js"></script>
 <script src="lib/timepicker/jquery-ui-timepicker-addon.min.js"></script>
 
-<script src="js/custom.js"></script>
+<script src="js/custom.js?V=1"></script>
 
 <script src="js/g.map.js"></script>
 <script src="js/gcal.js"></script>

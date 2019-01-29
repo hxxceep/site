@@ -31,6 +31,7 @@
 					<th data-column-id="staff_hkid">身份證</th>
           <th data-column-id="staff_district">居住地區</th>
           <th data-column-id="staff_paymethod">付款方法</th>
+					<th data-column-id="staff_sex">性别</th>
 					<th data-column-id="staff_remark">備註</th>
 					<th data-column-id="commands" data-formatter="commands" data-sortable="false">命令</th>
 				</tr>
