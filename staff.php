@@ -253,7 +253,7 @@ $( document ).ready(function() {
 											$('#edit_staff_district').val(ele.siblings(':nth-of-type(6)').html());
 											$('#edit_staff_paymethod').val(ele.siblings(':nth-of-type(7)').html());
 											$('#edit_staff_remark').val(ele.siblings(':nth-of-type(9)').html());
-											$('#edit_staff_district').val(ele.siblings(':nth-of-type(8)').html());
+											$('#edit_staff_sex').val(ele.siblings(':nth-of-type(8)').html());
 					} else {
 					 alert('Now row selected! First select row, then click edit button');
 					}
