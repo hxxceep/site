@@ -206,13 +206,13 @@
 
 	function getRecords($params) {
 
-		$select = "SELECT * FROM staff";
+		$select = "SELECT concat(\"WK\",`staff_id`),`staff_name`,`staff_name_chi`,`staff_hkid`,`staff_sex`,`staff_phone`,`staff_district`FROM `staff` WHERE 1";
 		$export = mysqli_query ( $this->conn, $select ) or die ( "Sql error : " . mysql_error( ) );
 
 	//	while ($property = mysqli_fetch_field($export)) {
   //  $header .= $property->name . ",";
 	//	}
-		$header = "員工,英名, 中名,電話,身分證,居住地區,付款方法,備註";
+		$header = "員工,英名, 中名,身分證,性別,電話,居住地區";
 
 		$this->exportCSV($header,$export);
 
