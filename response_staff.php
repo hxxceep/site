@@ -65,7 +65,7 @@
 
 
 	function getRecords($params) {
-		$rp = isset($params['rowCount']) ? $params['rowCount'] : 10000;
+		$rp = isset($params['rowCount']) ? $params['rowCount'] : 50;
 
 		if (isset($params['current'])) { $page  = $params['current']; } else { $page=1; };
         $start_from = ($page-1) * $rp;
@@ -106,7 +106,7 @@
 
 		$json_data = array(
 			"current"            => intval($params['current']),
-			"rowCount"            => 10000,
+			"rowCount"            => 50,
 			"total"    => intval($qtot->num_rows),
 			"rows"            => $data   // total data array
 			);
