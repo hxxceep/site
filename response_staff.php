@@ -106,7 +106,7 @@
 
 		$json_data = array(
 			"current"            => intval($params['current']),
-			"rowCount"            => 50,
+			"rowCount"            => 10,
 			"total"    => intval($qtot->num_rows),
 			"rows"            => $data   // total data array
 			);
