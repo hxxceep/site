@@ -46,13 +46,14 @@
 	}
 		function insertstaff($params) {
 		$data = array();;
-		$sql = "INSERT INTO `staff`( `staff_name`,`staff_name_chi`, `staff_phone`, `staff_hkid`, `staff_sex`, `staff_district`, `staff_paymethod`,`staff_remark`) VALUES ";
+		$sql = "INSERT INTO `staff`( `staff_name`,`staff_name_chi`, `staff_phone`, `staff_hkid`, `staff_sex`,`staff_dob`, `staff_district`, `staff_paymethod`,`staff_remark`) VALUES ";
 		$sql .= "('" ;
 		$sql .=		mysqli_real_escape_string($this->conn,str_replace(",",'',$params["staff_name"])) . "', '" ;
 		$sql .=		mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_name_chi"])) . "', '" ;
 		$sql .=  	mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_phone"])) . "','" ;
 		$sql .=  	mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_hkid"]))  . "','" ;
 		$sql .=  	mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_sex"]))  . "','" ;
+		$sql .=  	mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_dob"]))  . "','" ;
 		$sql .=  	mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_district"]))  . "','" ;
 		$sql .=  	mysqli_real_escape_string($this->conn,str_replace(" ","",$params["staff_paymethod"]))  . "','" ;
 		$sql .=  	mysqli_real_escape_string($this->conn,$params["staff_remark"]) ;
@@ -82,7 +83,7 @@
 			$where .=" ORDER By ".key($params['sort']) .' '.current($params['sort'])." ";
 		}
 	   // getting total number records without any search
-		$sql = "SELECT CONCAT('WK',`staff_id`) as staff_id, `staff_name`, `staff_name_chi`, `staff_phone`, `staff_hkid`, `staff_district`, `staff_paymethod`, `staff_remark`, `staff_sex` FROM `staff` ";
+		$sql = "SELECT CONCAT('WK',`staff_id`) as staff_id, `staff_name`, `staff_name_chi`, `staff_phone`, `staff_hkid`, `staff_district`, `staff_paymethod`, `staff_remark`, `staff_sex`, `staff_dob` FROM `staff` ";
 		$sqlTot .= $sql;
 		$sqlRec .= $sql;
 
@@ -121,6 +122,7 @@
 		$sql .="staff_phone= '" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_phone"]) ."',";
 		$sql .="staff_hkid=  '" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_hkid"]) ."',";
 		$sql .="staff_sex=  '" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_sex"]) ."',";
+		$sql .="staff_dob=  '" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_dob"]) ."',";
 		$sql .="staff_district= '" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_district"]) ."',";
 		$sql .="staff_paymethod='" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_paymethod"]) ."', ";
 		$sql .="staff_remark='" . 	mysqli_real_escape_string($this->conn,$params["edit_staff_remark"]) ."' ";

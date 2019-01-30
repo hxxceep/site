@@ -32,6 +32,7 @@
           <th data-column-id="staff_district">居住地區</th>
           <th data-column-id="staff_paymethod">付款方法</th>
 					<th data-column-id="staff_sex">性别</th>
+					<th data-column-id="staff_dob">生日</th>
 					<th data-column-id="staff_remark">備註</th>
 					<th data-column-id="commands" data-formatter="commands" data-sortable="false">命令</th>
 				</tr>
@@ -100,6 +101,10 @@
 											<option>元朗</option>
 											<option>天水圍</option>
 									  </select>
+									</div>
+									<div class="form-group">
+										<label for="staff" class="control-label">生日</label>
+												<input type="text" class="form-control" id="staff_dob" name="staff_dob"/>
 									</div>
 									<div class="form-group">
 										<label for="staff" class="control-label">付款方法:</label>
@@ -188,7 +193,10 @@
 											  </select>
 											</div>
 
-
+											<div class="form-group">
+												<label for="staff" class="control-label">生日</label>
+														<input type="text" class="form-control" id="edit_staff_dob" name="edit_staff_dob"/>
+											</div>
 											<div class="form-group">
 												<label for="staff" class="control-label">付款方法:</label>
 														<input type="text" class="form-control" id="edit_staff_paymethod" name="edit_staff_paymethod"/>
@@ -252,7 +260,8 @@ $( document ).ready(function() {
                       $('#edit_staff_hkid').val(ele.siblings(':nth-of-type(5)').html());
 											$('#edit_staff_district').val(ele.siblings(':nth-of-type(6)').html());
 											$('#edit_staff_paymethod').val(ele.siblings(':nth-of-type(7)').html());
-											$('#edit_staff_remark').val(ele.siblings(':nth-of-type(9)').html());
+											$('#edit_staff_dob').val(ele.siblings(':nth-of-type(9)').html());
+											$('#edit_staff_remark').val(ele.siblings(':nth-of-type(10)').html());
 											$('#edit_staff_sex').val(ele.siblings(':nth-of-type(8)').html());
 					} else {
 					 alert('Now row selected! First select row, then click edit button');
