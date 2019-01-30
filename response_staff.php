@@ -93,8 +93,8 @@
 			$sqlTot .= $where;
 			$sqlRec .= $where;
 		}
-//		if ($rp!=-1)
-	//	$sqlRec .= " LIMIT ". $start_from .",".$rp;
+		if ($rp!=-1)
+		$sqlRec .= " LIMIT ". $start_from .",".$rp;
 
 
 		$qtot = mysqli_query($this->conn, $sqlTot) or die("error to fetch tot staffs data"  .$sqlTot);
