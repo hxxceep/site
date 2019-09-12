@@ -48,10 +48,10 @@
 								      <label>散工 </label>  <input class="form-control" id="astaff" autocomplete="off" autocomplete="false"></input>
 								    </div>
 								    <div class="col-xs-2">
-								    <label>薪金 </label> <input class="form-control" id="staff_salary"  onkeypress="return isNumberKey(event)" maxlength="4"></input>
+								    <label>薪金 </label> <input class="form-control" id="staff_salary"  onkeypress="return isNumberKey(event)" maxlength="7"></input>
 									</div>
 										<div class="col-xs-2">
-									 <label>薪金OT </label> <input class="form-control" id="staff_salary_OT" onkeypress="return isNumberKey(event)" maxlength="4"></input>
+									 <label>薪金OT </label> <input class="form-control" id="staff_salary_OT" onkeypress="return isNumberKey(event)" maxlength="7"></input>
 									 </div>
 										<div class="col-xs-3">
 											<label>&nbsp;	 </label>

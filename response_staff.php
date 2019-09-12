@@ -76,6 +76,7 @@
 			$where .=" WHERE ";
 			$where .=" ( staff_name LIKE '".$params['searchPhrase']."%' ";
 			$where .=" OR staff_phone LIKE '".$params['searchPhrase']."%' ";
+			$where .=" OR staff_name_chi LIKE '".$params['searchPhrase']."%' ";
 			$where .=" OR staff_district LIKE '".$params['searchPhrase']."%' ";
 			$where .=" OR staff_paymethod LIKE '".$params['searchPhrase']."%' )";
 	   }
