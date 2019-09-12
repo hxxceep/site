@@ -60,6 +60,11 @@
                     <label for="staff" class="control-label">姓名(英):</label>
                     <input type="text" class="form-control" id="staff_name" name="staff_name" 	/>
                   </div>
+				  <div class="form-group">
+                    <label for="staff" class="control-label">姓名(中):</label>
+                    <input type="text" class="form-control" id="staff_name_chi" name="staff_name_chi" 	/>
+                  </div>
+
 									<div class="form-group">
                     <label for="sex" class="control-label">性别</label>
 										<select class="form-control"  id="staff_sex" name="staff_sex">
