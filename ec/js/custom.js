@@ -57,12 +57,12 @@ $('#calendarModal').on('show.bs.modal', function() {
 				if  ( $("#astaff").val().indexOf(":")>0 != "" && 	$("#staff_salary").val()*1 + $("#staff_salary_OT").val()*1 > 0)
 				{
 
-					var total = parseInt($("#staff_salary").val()*1)+ parseInt($("#staff_salary_OT").val()*1)
+					var total = parseFloat($("#staff_salary").val()*1)+ parseFloat($("#staff_salary_OT").val()*1)
 					var staffname = $("#astaff").val().replace("," , "").split(";")[0];
 					$("#stafflist").val($("#stafflist").val()  + staffname+ "," + total );
 
-					if (parseInt($("#staff_salary_OT").val()*1) > 0)
-					$("#stafflist").val(	$("#stafflist").val() + ", OT"+ (parseInt($("#staff_salary_OT").val()*1)));
+					if (parseFloat($("#staff_salary_OT").val()) > 0)
+					$("#stafflist").val(	$("#stafflist").val() + ", OT"+ (parseFloat($("#staff_salary_OT").val()*1)));
 					$("#stafflist").val(	$("#stafflist").val() + ';\r\n');
 					$("#stafflist").val(	$("#stafflist").val().replace(/\n\s*\n/g, '\n'));
 					$("#astaff").val("");

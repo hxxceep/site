@@ -2,7 +2,7 @@
 
 	// Loader - class and connection
 	include('loader.php');
-	
+	error_reporting(0);
 	if(isset($_GET['token']) && $_GET['token'] == $_SESSION['token'])
 	{
 		// Catch start, end and id from javascript

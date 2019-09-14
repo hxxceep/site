@@ -262,34 +262,42 @@
 		}
 
 	protected function update_insert_to_salary($staff, $os,$month, $pid){
-
-
+		ini_set('error_reporting', E_ALL);
+		error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 		$strq = "delete from salary where pid =".$pid;
 		$ot = 0;
 		$query =  mysqli_query($this->connection, $strq);
 		$staff = str_replace(' ','',$staff);
 		//$staff = str_replace(array("\r\n", "\r", "\n"), "", $staff);
 		$rows = preg_split('/;|\r|\n|\r\n?/', $staff);
+		$staffsallary = array_fill(0, 3, 0);
+		try {
+		for ($x = 0; $x < count($rows); $x++) {
 
-		for ($x = 0; $x <= count($rows); $x++) {
-			$staffsallary = explode(',',$rows[$x]);
-			$staffid = explode(':',$staffsallary[0]);
-			$staffsallary[1] = intval($staffsallary[1]);
+					if(empty(trim($rows[$x]))) continue;
 
-			if (sizeof($staffsallary) > 1)
-			if (!empty($staffsallary[2])){
-					$ot  = intval(str_replace("OT","",$staffsallary[2]));
+					$staffsallary = explode(',',$rows[$x]);
+					$staffid = explode(':',$staffsallary[0]);
+					if(isset($staffsallary[1]))
+					$floatsalary = floatval($staffsallary[1]);
+
+					if (sizeof($staffsallary) > 1)
+					if (!empty($staffsallary[2])){
+							$ot  = floatval(str_replace("OT","",$staffsallary[2]));
+					}
+
+
+
+					if(!empty($staffsallary[0]) && is_numeric($floatsalary) && is_numeric($staffid[0])){
+						$strq = "insert into salary (staff, salary_OS, salary_month,pid,salary_OT) values('".$staffid[0]."', ".floatval ($floatsalary).",'".$month."',".$pid .",". $ot.") ON DUPLICATE KEY UPDATE salary_OS= ".floatval ($floatsalary).";";
+					
+						$query =  mysqli_query($this->connection, $strq);
+
+					}
+				}
+			} catch (Exception $e) {
+				
 			}
-
-
-
-			if(!empty($staffsallary[0]) && is_numeric($staffsallary[1]) && is_numeric($staffid[0])){
-				$strq = "insert into salary (staff, salary_OS, salary_month,pid,salary_OT) values('".$staffid[0]."', ".intval($staffsallary[1]).",'".$month."',".$pid .",". $ot.") ON DUPLICATE KEY UPDATE salary_OS= ".intval($staffsallary[1]).";";
-			//print $strq;
-				$query =  mysqli_query($this->connection, $strq);
-
-			}
-		}
 	}
 		/**
 		* This function updates custom fields
